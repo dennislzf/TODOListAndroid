@@ -17,6 +17,7 @@ public class TODODatabaseManager
 	private SQLiteDatabase db;
 	private final String DB_NAME = "TODOList";
 	private final int DB_VERSION = 1;
+	private CustomSQLiteOpenHelper DBHelper;
  
 	// These constants are specific to the database table.  They should be
 	// changed to suit your needs.
@@ -47,24 +48,22 @@ public class TODODatabaseManager
  
  
  
-	/**********************************************************************
-	 * ADDING A ROW TO THE DATABASE TABLE
-	 * 
-	 * This is an example of how to add a row to a database table
-	 * using this class.  You should edit this method to suit your
-	 * needs.
-	 * 
-	 * the key is automatically assigned by the database
-	 * @param rowStringOne the value for the row's first column
-	 * @param rowStringTwo the value for the row's second column 
-	 */
-	public void addRow(String rowStringOne, String rowStringTwo)
+	//add row to DB
+	public void addRow(long rowID, String rowStringOne, String rowStringTwo,  String rowStringThree, String rowStringFour, String rowStringFive,
+			 String rowStringSix, String rowStringSeven, String rowStringEight, String rowStringNine)
 	{
 		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
 		values.put(TABLE_ROW_ONE, rowStringOne);
 		values.put(TABLE_ROW_TWO, rowStringTwo);
- 
+		values.put(TABLE_ROW_THREE, rowStringTwo);
+		values.put(TABLE_ROW_FOUR, rowStringTwo);
+		values.put(TABLE_ROW_FIVE, rowStringTwo);
+		values.put(TABLE_ROW_SIX, rowStringTwo);
+		values.put(TABLE_ROW_SEVEN, rowStringTwo);
+		values.put(TABLE_ROW_EIGHT, rowStringTwo);
+		values.put(TABLE_ROW_NINE, rowStringTwo);
+		
 		// ask the database object to insert the new data 
 		try{db.insert(TABLE_NAME, null, values);}
 		catch(Exception e)
@@ -76,15 +75,7 @@ public class TODODatabaseManager
  
  
  
-	/**********************************************************************
-	 * DELETING A ROW FROM THE DATABASE TABLE
-	 * 
-	 * This is an example of how to delete a row from a database table
-	 * using this class. In most cases, this method probably does
-	 * not need to be rewritten.
-	 * 
-	 * @param rowID the SQLite database identifier for the row to delete.
-	 */
+
 	public void deleteRow(long rowID)
 	{
 		// ask the database manager to delete the row of given id
@@ -96,24 +87,24 @@ public class TODODatabaseManager
 		}
 	}
  
-	/**********************************************************************
-	 * UPDATING A ROW IN THE DATABASE TABLE
-	 * 
-	 * This is an example of how to update a row in the database table
-	 * using this class.  You should edit this method to suit your needs.
-	 * 
-	 * @param rowID the SQLite database identifier for the row to update.
-	 * @param rowStringOne the new value for the row's first column
-	 * @param rowStringTwo the new value for the row's second column 
-	 */ 
-	public void updateRow(long rowID, String rowStringOne, String rowStringTwo)
+
+	public void updateRow(long rowID, String rowStringOne, String rowStringTwo,  String rowStringThree, String rowStringFour, String rowStringFive,
+			 String rowStringSix, String rowStringSeven, String rowStringEight, String rowStringNine)
 	{
 		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
 		values.put(TABLE_ROW_ONE, rowStringOne);
 		values.put(TABLE_ROW_TWO, rowStringTwo);
+		values.put(TABLE_ROW_THREE, rowStringTwo);
+		values.put(TABLE_ROW_FOUR, rowStringTwo);
+		values.put(TABLE_ROW_FIVE, rowStringTwo);
+		values.put(TABLE_ROW_SIX, rowStringTwo);
+		values.put(TABLE_ROW_SEVEN, rowStringTwo);
+		values.put(TABLE_ROW_EIGHT, rowStringTwo);
+		values.put(TABLE_ROW_NINE, rowStringTwo);
+		
  
-		// ask the database object to update the database row of given rowID
+		// update the database row of given rowID
 		try {db.update(TABLE_NAME, values, TABLE_ROW_ID + "=" + rowID, null);}
 		catch (Exception e)
 		{
@@ -122,33 +113,21 @@ public class TODODatabaseManager
 		}
 	}
  
-	/**********************************************************************
-	 * RETRIEVING A ROW FROM THE DATABASE TABLE
-	 * 
-	 * This is an example of how to retrieve a row from a database table
-	 * using this class.  You should edit this method to suit your needs.
-	 * 
-	 * @param rowID the id of the row to retrieve
-	 * @return an array containing the data from the row
-	 */
+
 	public ArrayList<Object> getRowAsArray(long rowID)
 	{
 		// create an array list to store data from the database row.
-		// I would recommend creating a JavaBean compliant object 
-		// to store this data instead.  That way you can ensure
-		// data types are correct.
 		ArrayList<Object> rowArray = new ArrayList<Object>();
 		Cursor cursor;
  
 		try
 		{
-			// this is a database call that creates a "cursor" object.
-			// the cursor object store the information collected from the
-			// database and is used to iterate through the data.
+
 			cursor = db.query
 			(
 					TABLE_NAME,
-					new String[] { TABLE_ROW_ID, TABLE_ROW_ONE, TABLE_ROW_TWO },
+					new String[] {TABLE_ROW_ID, TABLE_ROW_ONE, TABLE_ROW_TWO,TABLE_ROW_THREE,TABLE_ROW_FOUR,TABLE_ROW_FIVE,TABLE_ROW_SIX,TABLE_ROW_SEVEN,TABLE_ROW_EIGHT,
+							TABLE_ROW_NINE},
 					TABLE_ROW_ID + "=" + rowID,
 					null, null, null, null, null
 			);
@@ -165,11 +144,17 @@ public class TODODatabaseManager
 					rowArray.add(cursor.getLong(0));
 					rowArray.add(cursor.getString(1));
 					rowArray.add(cursor.getString(2));
+					rowArray.add(cursor.getString(3));
+					rowArray.add(cursor.getString(4));
+					rowArray.add(cursor.getString(5));
+					rowArray.add(cursor.getString(6));
+					rowArray.add(cursor.getString(7));
+					rowArray.add(cursor.getString(8));
+					rowArray.add(cursor.getString(9));
 				}
 				while (cursor.moveToNext());
 			}
  
-			// let java know that you are through with the cursor.
 			cursor.close();
 		}
 		catch (SQLException e) 
@@ -185,16 +170,7 @@ public class TODODatabaseManager
  
  
  
-	/**********************************************************************
-	 * RETRIEVING ALL ROWS FROM THE DATABASE TABLE
-	 * 
-	 * This is an example of how to retrieve all data from a database
-	 * table using this class.  You should edit this method to suit your
-	 * needs.
-	 * 
-	 * the key is automatically assigned by the database
-	 */
- 
+
 	public ArrayList<ArrayList<Object>> getAllRowsAsArrays()
 	{
 		// create an ArrayList that will hold all of the data collected from
@@ -211,7 +187,8 @@ public class TODODatabaseManager
 			// ask the database object to create the cursor.
 			cursor = db.query(
 					TABLE_NAME,
-					new String[]{TABLE_ROW_ID, TABLE_ROW_ONE, TABLE_ROW_TWO},
+					new String[]{TABLE_ROW_ID, TABLE_ROW_ONE, TABLE_ROW_TWO,TABLE_ROW_THREE,TABLE_ROW_FOUR,TABLE_ROW_FIVE,TABLE_ROW_SIX,TABLE_ROW_SEVEN,TABLE_ROW_EIGHT,
+							TABLE_ROW_NINE},
 					null, null, null, null, null
 			);
  
@@ -229,7 +206,13 @@ public class TODODatabaseManager
 					dataList.add(cursor.getLong(0));
 					dataList.add(cursor.getString(1));
 					dataList.add(cursor.getString(2));
- 
+					dataList.add(cursor.getString(3));
+					dataList.add(cursor.getString(4));
+					dataList.add(cursor.getString(5));
+					dataList.add(cursor.getString(6));
+					dataList.add(cursor.getString(7));
+					dataList.add(cursor.getString(8));
+					dataList.add(cursor.getString(9));
 					dataArrays.add(dataList);
 				}
 				// move the cursor's pointer up one position.
@@ -248,29 +231,19 @@ public class TODODatabaseManager
 	}
  
  
+	public TODODatabaseManager open() throws SQLException
+	{
+	
+	db = DBHelper.getWritableDatabase();
+	return this;
+	}
+	//---closes the database---
+	public void close()
+	{
+		DBHelper.close();
+	}
  
- 
-	/**********************************************************************
-	 * THIS IS THE BEGINNING OF THE INTERNAL SQLiteOpenHelper SUBCLASS.
-	 * 
-	 * I MADE THIS CLASS INTERNAL SO I CAN COPY A SINGLE FILE TO NEW APPS 
-	 * AND MODIFYING IT - ACHIEVING DATABASE FUNCTIONALITY.  ALSO, THIS WAY 
-	 * I DO NOT HAVE TO SHARE CONSTANTS BETWEEN TWO FILES AND CAN
-	 * INSTEAD MAKE THEM PRIVATE AND/OR NON-STATIC.  HOWEVER, I THINK THE
-	 * INDUSTRY STANDARD IS TO KEEP THIS CLASS IN A SEPARATE FILE.
-	 *********************************************************************/
- 
-	/**
-	 * This class is designed to check if there is a database that currently
-	 * exists for the given program.  If the database does not exist, it creates
-	 * one.  After the class ensures that the database exists, this class
-	 * will open the database for use.  Most of this functionality will be
-	 * handled by the SQLiteOpenHelper parent class.  The purpose of extending
-	 * this class is to tell the class how to create (or update) the database.
-	 * 
-	 * @author Randall Mitchell
-	 *
-	 */
+	
 	private class CustomSQLiteOpenHelper extends SQLiteOpenHelper
 	{
 		public CustomSQLiteOpenHelper(Context context)
@@ -281,14 +254,20 @@ public class TODODatabaseManager
 		@Override
 		public void onCreate(SQLiteDatabase db)
 		{
-			// This string is used to create the database.  It should
-			// be changed to suit your needs.
+			//create db
 			String newTableQueryString = "create table " +
 										TABLE_NAME +
 										" (" +
 										TABLE_ROW_ID + " integer primary key autoincrement not null," +
 										TABLE_ROW_ONE + " text," +
-										TABLE_ROW_TWO + " text" +
+										TABLE_ROW_TWO + " text," +
+										TABLE_ROW_THREE + " text," +
+										TABLE_ROW_FOUR + " text," +
+										TABLE_ROW_FIVE + " text," +
+										TABLE_ROW_SIX + " text," +
+										TABLE_ROW_SEVEN + " text," +
+										TABLE_ROW_EIGHT + " text," +
+										TABLE_ROW_NINE + " text" +
 										");";
 			// execute the query string to the database.
 			db.execSQL(newTableQueryString);
@@ -302,4 +281,4 @@ public class TODODatabaseManager
 			// OTHERWISE, YOU WOULD SPECIFIY HOW TO UPGRADE THE DATABASE.
 		}
 	}
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+}
