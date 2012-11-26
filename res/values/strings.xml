@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TasksToDo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_create_new_to_do">CreateNewToDoActivity</string>
+    <string name="item_to_do">Item Name</string>
+    <string name="pick_date">Pick a Date</string>
+    <string name="pick_time">Pick a Time</string>
+    <string name="description">Description (optional)</string>
+    <string name="high">High</string>
+    <string name="low">Low</string>
+    <string name="addtodo">Add Item to ToDo List</string>
+
+</resources>

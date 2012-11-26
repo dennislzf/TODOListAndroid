@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateNewToDoActivity" >
+
+    <EditText
+        android:id="@+id/item_to_do"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/item_to_do"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+    
+        <EditText
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/description"
+        android:inputType="text" 
+        android:layout_below="@+id/item_to_do">
+
+     
+    </EditText>
+      
+    <Button 
+         android:id="@+id/time_selected"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:text="@string/pick_time" 
+    android:onClick="showTimePickerDialog" 
+    android:layout_below="@+id/description"/>
+    
+    <Button 
+        android:id="@+id/date_selected"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:text="@string/pick_date" 
+    android:onClick="showDatePickerDialog" 
+    android:layout_below="@+id/description"
+    android:layout_toRightOf="@+id/time_selected"/>
+     
+     <TextView android:id="@+id/text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Priority of Task" 
+               android:layout_below="@+id/time_selected"/>
+     
+   <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/radiolist"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+   android:layout_below="@+id/text" >
+        
+    <RadioButton android:id="@+id/high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/high"
+        android:onClick="priorityHighClick"/>
+    <RadioButton android:id="@+id/low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/low"
+        android:onClick="priorityLowClick"/>
+   
+    </RadioGroup>
+     
+     <Button 
+    android:id="@+id/addbutt"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:text="@string/addtodo" 
+    android:onClick="addToDo" 
+    android:layout_below="@+id/radiolist"/>
+     
+      <Button 
+    android:id="@+id/addanother"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:text="Add another TODO Item" 
+    android:onClick="addAnotherToDo" 
+    android:layout_below="@+id/radiolist"
+     android:layout_toRightOf="@+id/addbutt"/>
+      
+   
+
+ 
+</RelativeLayout>
