@@ -14,7 +14,6 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int Table=0x7f07000c;
         public static final int TableScroller=0x7f07000b;
         public static final int addanother=0x7f070009;
         public static final int addbutt=0x7f070008;
@@ -24,7 +23,7 @@ public final class R {
         public static final int high=0x7f070006;
         public static final int item_to_do=0x7f070000;
         public static final int low=0x7f070007;
-        public static final int menu_settings=0x7f07000d;
+        public static final int menu_settings=0x7f07000c;
         public static final int radiolist=0x7f070005;
         public static final int text=0x7f070004;
         public static final int time_selected=0x7f070002;

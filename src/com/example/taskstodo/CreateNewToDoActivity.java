@@ -1,6 +1,8 @@
 package com.example.taskstodo;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -80,13 +83,16 @@ public class CreateNewToDoActivity extends Activity {
 	
 	//add task to the database
 	public void addToDo(View v){
-		addItemToDB();
+		int added = addItemToDB();
+		if (added == 0 ){
 		Intent intent = new Intent(this, MainActivity.class);
     	startActivity(intent);
+		}
 	}
 	//Add task to DB and wait clear the fields to add another
 	public void addAnotherToDo(View v){
-		addItemToDB();
+		 int added = addItemToDB();
+		 if (added == 0 ){
 		dateselected = false;
 		timeselected = false;
 		priorityselected = false;
@@ -101,31 +107,56 @@ public class CreateNewToDoActivity extends Activity {
 		((EditText) findViewById(R.id.description)).setText("");
 		((Button) findViewById(R.id.date_selected)).setText("Pick A Date");
 		((Button) findViewById(R.id.time_selected)).setText("Pick A Time");
+		 }
 		
 	}
 	
-	private void addItemToDB() {
+	@SuppressWarnings("deprecation")
+	private int addItemToDB() {
 		Context context = getApplicationContext();
 		EditText titlebox = (EditText) findViewById(R.id.item_to_do);
+		
 		// if user did not create title for todo item, make sure that they create one.
-		if (titlebox.getText().toString().equals("")){
-			Toast toast = Toast.makeText(context, "You must choose a title for your TODO item!", Toast.LENGTH_SHORT);
-			toast.show();
-			return;
+				if (titlebox.getText().toString().equals("")){
+					Toast toast = Toast.makeText(context, "You must choose a title for your TODO item!", Toast.LENGTH_SHORT);
+					toast.show();
+					return -1;
+				}
+				//if user doesnt select date or time then prompt user to select a time and date
+				if(dateselected == false || timeselected == false){
+					Toast toast = Toast.makeText(context, "You must select and date and a time for your TODO item!", Toast.LENGTH_SHORT);
+					toast.show();
+					return -1;
+				}
+				// if user does not select priority setting for event, make prompt tellig user to select one.
+				if(priorityselected = false){
+					Toast toast = Toast.makeText(context, "You must select a priority for your TODO task!", Toast.LENGTH_SHORT);
+					toast.show();
+					return -1;
+				}
+			
+		
+		//if date selected is past or time selected has passed, do not allow selection.
+		Time date = new Time();
+		date.setToNow();
+		
+		int isampmhour;
+		if(ampm.equals("pm")){
+			isampmhour = Integer.parseInt(myhour) + 12;
 		}
-		//if user doesnt select date or time then prompt user to select a time and date
-		if(dateselected == false || timeselected == false){
-			Toast toast = Toast.makeText(context, "You must select and date and a time for your TODO item!", Toast.LENGTH_SHORT);
+		else isampmhour = Integer.parseInt(myhour);
+		Time selecteddate = new Time();
+		selecteddate.set(2,Integer.parseInt(myminute), Integer.parseInt(myhour), Integer.parseInt(myday), Integer.parseInt(mymonth),Integer.parseInt(myyear));
+		
+		if(selecteddate.before(date)){
+			Toast toast = Toast.makeText(context, "You must choose a date and time that is in the future!", Toast.LENGTH_SHORT);
 			toast.show();
-			return;
+			return -1;
 		}
-		// if user does not select priority setting for event, make prompt tellig user to select one.
-		if(priorityselected = false){
-			Toast toast = Toast.makeText(context, "You must select a priority for your TODO task!", Toast.LENGTH_SHORT);
-			toast.show();
-			return;
-		}
+		
 	
+		
+		
 		
 		
 		EditText descriptionbox = (EditText) findViewById(R.id.description);
@@ -135,6 +166,7 @@ public class CreateNewToDoActivity extends Activity {
 		db.open();
 		db.addRow(title, description, myhour, myminute, ampm, myday, mymonth, myyear, mypriority);
 		db.close();
+		return 0;
 		
 	}
 
@@ -190,6 +222,9 @@ public class CreateNewToDoActivity extends Activity {
 		if (hourOfDay>12){
 			hourOfDay = hourOfDay - 12 ; 
 			ampm = "pm";
+		}
+		if (hourOfDay == 0){
+			hourOfDay = 12;
 		}
 		 myhour = String.valueOf(hourOfDay);
 		 myminute = String.valueOf(minute); 

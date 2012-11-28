@@ -43,26 +43,27 @@ public class TODODatabaseManager
 		// create or open the database
 		CustomSQLiteOpenHelper helper = new CustomSQLiteOpenHelper(context);
 		this.db = helper.getWritableDatabase();
+		DBHelper = new CustomSQLiteOpenHelper(context);
 	}
  
  
  
  
 	//add row to DB
-	public void addRow(long rowID, String rowStringOne, String rowStringTwo,  String rowStringThree, String rowStringFour, String rowStringFive,
+	public void addRow(String rowStringOne, String rowStringTwo,  String rowStringThree, String rowStringFour, String rowStringFive,
 			 String rowStringSix, String rowStringSeven, String rowStringEight, String rowStringNine)
 	{
 		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
 		values.put(TABLE_ROW_ONE, rowStringOne);
 		values.put(TABLE_ROW_TWO, rowStringTwo);
-		values.put(TABLE_ROW_THREE, rowStringTwo);
-		values.put(TABLE_ROW_FOUR, rowStringTwo);
-		values.put(TABLE_ROW_FIVE, rowStringTwo);
-		values.put(TABLE_ROW_SIX, rowStringTwo);
-		values.put(TABLE_ROW_SEVEN, rowStringTwo);
-		values.put(TABLE_ROW_EIGHT, rowStringTwo);
-		values.put(TABLE_ROW_NINE, rowStringTwo);
+		values.put(TABLE_ROW_THREE, rowStringThree);
+		values.put(TABLE_ROW_FOUR, rowStringFour);
+		values.put(TABLE_ROW_FIVE, rowStringFive);
+		values.put(TABLE_ROW_SIX, rowStringSix);
+		values.put(TABLE_ROW_SEVEN, rowStringSeven);
+		values.put(TABLE_ROW_EIGHT, rowStringEight);
+		values.put(TABLE_ROW_NINE, rowStringNine);
 		
 		// ask the database object to insert the new data 
 		try{db.insert(TABLE_NAME, null, values);}
