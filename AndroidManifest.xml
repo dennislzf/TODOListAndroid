@@ -24,11 +24,14 @@
         </activity>
         <activity
             android:name="com.example.taskstodo.CreateNewToDoActivity"
-            android:label="@string/title_activity_create_new_to_do">
-        
+            android:label="@string/title_activity_create_new_to_do" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.testapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.taskstodo.EditToDoActivity"
+            android:label="@string/title_activity_edit_to_do" >
         </activity>
     </application>
 

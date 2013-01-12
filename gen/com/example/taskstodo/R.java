@@ -30,11 +30,13 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_create_new_to_do=0x7f030000;
-        public static final int activity_main=0x7f030001;
+        public static final int activity_edit_to_do=0x7f030001;
+        public static final int activity_main=0x7f030002;
     }
     public static final class menu {
         public static final int activity_create_new_to_do=0x7f060000;
-        public static final int activity_main=0x7f060001;
+        public static final int activity_edit_to_do=0x7f060001;
+        public static final int activity_main=0x7f060002;
     }
     public static final class string {
         public static final int addtodo=0x7f04000a;
@@ -48,6 +50,7 @@ public final class R {
         public static final int pick_date=0x7f040005;
         public static final int pick_time=0x7f040006;
         public static final int title_activity_create_new_to_do=0x7f040003;
+        public static final int title_activity_edit_to_do=0x7f04000b;
     }
     public static final class style {
         /** 

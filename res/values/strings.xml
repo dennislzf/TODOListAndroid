@@ -12,5 +12,6 @@
     <string name="high">High</string>
     <string name="low">Low</string>
     <string name="addtodo">Add Item to ToDo List</string>
+    <string name="title_activity_edit_to_do">EditToDoActivity</string>
 
 </resources>

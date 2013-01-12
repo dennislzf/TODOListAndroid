@@ -28,7 +28,8 @@ import com.example.taskstodo.persistence.TODODatabaseManager;
 
 @SuppressLint("ValidFragment")
 public class CreateNewToDoActivity extends Activity {
-	String myday, mymonth, myyear, myhour,myminute,mypriority,ampm;
+	String myday, mymonth, myyear, myhour,myminute,ampm;
+	String mypriority = "";
 	boolean dateselected = false;
 	boolean timeselected = false;
 	boolean priorityselected = false;
@@ -139,7 +140,6 @@ public class CreateNewToDoActivity extends Activity {
 		//if date selected is past or time selected has passed, do not allow selection.
 		Time date = new Time();
 		date.setToNow();
-		
 		int isampmhour;
 		if(ampm.equals("pm")){
 			isampmhour = Integer.parseInt(myhour) + 12;
@@ -154,11 +154,9 @@ public class CreateNewToDoActivity extends Activity {
 			return -1;
 		}
 		
-	
-		
-		
-		
-		
+		if (mypriority.equals("")){
+			mypriority = "Low";
+		}
 		EditText descriptionbox = (EditText) findViewById(R.id.description);
 		String title = titlebox.getText().toString();
 		String description = descriptionbox.getText().toString();
@@ -188,7 +186,7 @@ public class CreateNewToDoActivity extends Activity {
 
 	public void onDateSet(DatePicker view, int year, int month, int day) {
 		 myday  = String.valueOf(day);
-		 mymonth  = String.valueOf(month);
+		 mymonth  = String.valueOf(month+1) ;
 		 myyear  = String.valueOf(year);
 		 dateselected = true;
 		Button datebutton = (Button) findViewById(R.id.date_selected);
@@ -230,11 +228,10 @@ public class CreateNewToDoActivity extends Activity {
 		 myminute = String.valueOf(minute); 
 		 timeselected = true;
 		Button buttontochange = (Button) findViewById(R.id.time_selected);
-		buttontochange.setText(myhour + ":" + myminute + ampm);
+		if(minute < 10){
+			buttontochange.setText(myhour + ":" +"0"+ myminute + ampm);
+		}else buttontochange.setText(myhour + ":" + myminute + ampm);
 		
-		 
-		  
-
 	}
 	}
 
