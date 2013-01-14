@@ -10,7 +10,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_launcher1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -24,14 +24,14 @@
         </activity>
         <activity
             android:name="com.example.taskstodo.CreateNewToDoActivity"
-            android:label="@string/title_activity_create_new_to_do" >
+            android:label="Create a new ToDo item" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.testapp.MainActivity" />
         </activity>
         <activity
             android:name="com.example.taskstodo.EditToDoActivity"
-            android:label="@string/title_activity_edit_to_do" >
+            android:label="Edit a ToDo item" >
         </activity>
     </application>
 

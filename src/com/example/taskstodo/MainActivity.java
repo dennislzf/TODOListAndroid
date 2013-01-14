@@ -13,6 +13,7 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
@@ -130,6 +131,7 @@ private void displayLowPriority(ArrayList<ArrayList<Object>> listoftodo, LinearL
 	boolean isheaderdisplayed= false; 
 	TextView lowpriorityheader = new TextView(this);
 	lowpriorityheader.setText("Low Priority");
+	lowpriorityheader.setBackgroundColor(Color.rgb(205, 255, 255));
 	lowpriorityheader.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 	
 for( int i = 0; i < listoftodo.size(); i++)
@@ -151,6 +153,7 @@ for( int i = 0; i < listoftodo.size(); i++)
 				TextView dateheader = new TextView(this);
 				String dateformat = changeToDateFormat(listoftodo.get(i));
 				dateheader.setText(dateformat);
+				dateheader.setBackgroundColor(Color.rgb(183, 175, 163));
 				lowprioritylist.addView(dateheader);
 				tempdate = testnewdate;	
 			}
@@ -162,6 +165,7 @@ for( int i = 0; i < listoftodo.size(); i++)
 		LayoutParams removebuttonparams = new  LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		removebuttonparams.setMargins(0, 0, -11, 0);
 		removebutton.setLayoutParams(removebuttonparams);
+		removebutton.setText(" X");
 		Button itemsinlist = new Button(this);
 		LayoutParams itemsinlistparam = new  LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		itemsinlistparam.setMargins(0, 0, -11, 0);
@@ -196,7 +200,12 @@ for( int i = 0; i < listoftodo.size(); i++)
 		timebuttonparam.setMargins(0, 2, 0, 0);
 		timebutton.setLayoutParams(timebuttonparam);
 		timebutton.setGravity(Gravity.CENTER_VERTICAL);
-		timebutton.setText(listoftodo.get(i).get(3).toString()+":"+listoftodo.get(i).get(4).toString()+" " +listoftodo.get(i).get(5).toString());
+		String minute = listoftodo.get(i).get(4).toString();
+		int minval= Integer.parseInt(minute);
+		if(minval<10){
+			minute = "0"+minute;
+		}
+		timebutton.setText(listoftodo.get(i).get(3).toString()+":"+minute+" " +listoftodo.get(i).get(5).toString());
 		todoitem.addView(removebutton);
 		todoitem.addView(itemsinlist);
 		todoitem.addView(timebutton);
@@ -213,12 +222,19 @@ private void displayHighPriority(final ArrayList<ArrayList<Object>> listoftodo, 
 	
 	Time tempdate= new Time();
 	tempdate.set(0, 0, 0, 0, 0, 0);
+	TextView highpriorityheader = new TextView(this);
+	highpriorityheader.setText("High Priority");
+	highpriorityheader.setBackgroundColor(Color.rgb(255, 0, 0));
+	highpriorityheader.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 	
+	boolean isheaderdisplayed = false;
 	
 for( int i = 0; i < listoftodo.size(); i++)
 {
 	if(listoftodo.get(i).get(9).toString().equals("High")){
-		
+		if(isheaderdisplayed == false){
+			highprioritylist.addView(highpriorityheader);
+			isheaderdisplayed = true;
 			Time testnewdate = new Time();
 			testnewdate.set(Integer.parseInt(listoftodo.get(i).get(6).toString()),
 							Integer.parseInt(listoftodo.get(i).get(7).toString()),
@@ -226,21 +242,19 @@ for( int i = 0; i < listoftodo.size(); i++)
 			if(testnewdate.monthDay != tempdate.monthDay || testnewdate.month != tempdate.month || testnewdate.year != tempdate.year){
 				TextView dateheader = new TextView(this);
 				String dateformat = changeToDateFormat(listoftodo.get(i));
+				dateheader.setBackgroundColor(Color.rgb(183, 175, 163));
 				dateheader.setText(dateformat);
 				highprioritylist.addView(dateheader);
 				tempdate = testnewdate;	
 			}
-			TextView highpriorityheader = new TextView(this);
-			highpriorityheader.setText("High Priority");
-			highpriorityheader.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-			if( listoftodo.size() > 0){
-			highprioritylist.addView(highpriorityheader);
-			}
+			
+		
 		final int idoftodo = Integer.parseInt(listoftodo.get(i).get(0).toString());
 		LinearLayout todoitem = new LinearLayout(this);
 		Button removebutton = new Button(this);
 		//removebutton.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
 		removebutton.setGravity(Gravity.LEFT);
+		removebutton.setText(" X");
 		LayoutParams removebuttonparams = new  LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		removebuttonparams.setMargins(0, 0, -11, 0);
 		removebutton.setLayoutParams(removebuttonparams);
@@ -276,16 +290,23 @@ for( int i = 0; i < listoftodo.size(); i++)
 		timebutton.setTextSize(12);
 		LayoutParams timebuttonparam = new  LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		timebuttonparam.height = itemsinlistparam.height;
+		String minute = listoftodo.get(i).get(4).toString();
+		int minval= Integer.parseInt(minute);
+		if(minval<10){
+			minute = "0"+minute;
+		}
 		timebuttonparam.setMargins(0, 2, 0, 0);
 		timebutton.setLayoutParams(timebuttonparam);
 		timebutton.setGravity(Gravity.CENTER_VERTICAL);
-		timebutton.setText(listoftodo.get(i).get(3).toString()+":"+listoftodo.get(i).get(4).toString()+" " +listoftodo.get(i).get(5).toString());
+		timebutton.setText(listoftodo.get(i).get(3).toString()+":"+minute+" " +listoftodo.get(i).get(5).toString());
 		todoitem.addView(removebutton);
 		todoitem.addView(itemsinlist);
 		todoitem.addView(timebutton);
-		highprioritylist.addView(todoitem);
-			}
-}
+		highprioritylist.addView(todoitem);}
+		}
+	}
+			
+
 
 }
 
@@ -347,8 +368,8 @@ default:
 if(day.equals("Today") || day.equals("Tomorrow")){
 	dateformat = day;
 }else{
-	
-dateformat = month + " " + dateitem.get(6).toString() +" "+ dateitem.get(8).toString();
+	String dayval = dateitem.get(6).toString();
+dateformat = month + " " + dayval +" "+ dateitem.get(8).toString();
 }
 
 return dateformat;
