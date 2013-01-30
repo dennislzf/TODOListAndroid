@@ -82,7 +82,7 @@
     android:id="@+id/addanother"
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content"
-    android:text="Add another TODO Item" 
+    android:text="Add another ToDo Item" 
     android:onClick="addAnotherToDo" 
     android:layout_below="@+id/radiolist"
      android:layout_toRightOf="@+id/addbutt"/>
